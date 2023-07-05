@@ -1,6 +1,6 @@
 # SimpleBlog
 
-## Requirements
+## Steps to run the application
 * pip Install django
 * pip install djangorestframework
 * python manage.py makemigration
