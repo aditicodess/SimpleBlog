@@ -1,0 +1,26 @@
+<html lang="en">
+  {% include "head.html" %}
+
+  <body>
+    {% include "nav.html" %}
+
+    <div class="blogs content">
+      <h2>All Blogs</h2>
+      {% if length > 0 %} {% for value in data %}
+      <a class="single" href="">
+        {% for val in value %}
+        <h3 class="title">{{ value }}</h3>
+        {% comment %}
+        <p class="snippet">{{ value }}</p>
+        {% endcomment %} {% endfor %}
+      </a>
+      {% endfor %} {% else %}
+      <p>There are no blogs to display....</p>
+      {% endif %}
+    </div>
+
+    {% include "footer.html" %}
+  </body>
+</html>
+
+{% comment %} /blogs/{{ item }} {% endcomment %}
