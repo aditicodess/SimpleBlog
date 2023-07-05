@@ -7,12 +7,9 @@
     <div class="blogs content">
       <h2>All Blogs</h2>
       {% if length > 0 %} {% for value in data %}
-      <a class="single" href="">
-        {% for val in value %}
-        <h3 class="title">{{ value }}</h3>
-        {% comment %}
-        <p class="snippet">{{ value }}</p>
-        {% endcomment %} {% endfor %}
+      <a class="single" href="/details/{{ value.id }}">
+        <h3 class="title">{{ value.title }}</h3>
+        <p class="snippet">{{ value.content }}</p>
       </a>
       {% endfor %} {% else %}
       <p>There are no blogs to display....</p>
@@ -22,5 +19,3 @@
     {% include "footer.html" %}
   </body>
 </html>
-
-{% comment %} /detail/{{ key }} {% endcomment %}

@@ -19,12 +19,16 @@
     <script>
       const trashcan = document.querySelector("a.delete");
       trashcan.addEventListener("click", (e) => {
+        console.log(trashcan.dataset.doc);
         const endpoint = `/details/${trashcan.dataset.doc}`;
         fetch(endpoint, {
           method: "DELETE",
         })
           .then((response) => response.json())
-          .then((data) => (window.location.href = data.redirect))
+          .then((data) => {
+            window.location.href = "http://127.0.0.1:8000/";
+            console.log(data);
+          })
           .catch((err) => console.log(err));
       });
     </script>
