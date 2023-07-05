@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
+from django.shortcuts import redirect
 
 
 # Create your views here.
@@ -34,6 +35,8 @@ class Login(APIView):
         if not user:
             return Response({'error': 'invalid Credential', 'status': 404})
         token_obj,created = Token.objects.get_or_create(user=user)
-
-        return Response({"status": 200,'token':str(token_obj),
-                         "massage": "your are successfully logged in"})
+        request.session['username'] = username
+        request.session['token'] = str(token_obj)
+        return redirect('home')
+        # return Response({"status": 200,'token':str(token_obj),
+        #                  "massage": "your are successfully logged in"})

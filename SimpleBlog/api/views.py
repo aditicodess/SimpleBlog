@@ -2,11 +2,12 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from api.serializer import PostSerializer
 from api.models import Post
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework.views import APIView
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from django.template import RequestContext
 
 ################################## Function base view (decorator view) #######################################
 
@@ -74,14 +75,19 @@ class ViewList(APIView):
 
 
 class AddPost(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
     def post(self,request):
         serializer=PostSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({'payload':serializer.errors,'status':400,'message':'Something went Wrong'})
         serializer.save()
-        return Response({'payload':serializer.data,'status':201,'message':'Blog is created'})
+        return redirect('home')
+        # return Response({'payload':serializer.data,'status':201,'message':'Blog is created'})
+
+    def get(self,request):
+        return render(request, "create.html")
+        
 
 class PostDetail(APIView):
     def get(self,request,pk):
@@ -90,7 +96,8 @@ class PostDetail(APIView):
             serializer = PostSerializer(blog)
             data = {
                 'title' : serializer.data["title"],
-                'description' : serializer.data["description"]
+                'description' : serializer.data["description"],
+                'id' : serializer.data["id"]
             }
             # print({'post':serializer.data["title"]})
             # return Response({'payload':serializer.data, 'status':200})
