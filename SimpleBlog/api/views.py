@@ -9,12 +9,16 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from middlewares.auth import auth_middleware
 from django.utils.decorators import method_decorator
-
+from django.core.paginator import Paginator
 
 class ViewList(APIView):
     def get(self,request):
-        blog=Post.objects.all()
-        serializer = PostSerializer(blog,many=True)
+        blogs = Post.objects.all()
+        paginator = Paginator(blogs, 4)
+        page_num = request.GET.get('page')
+        BlogData = paginator.get_page(page_num)
+        totalPage = BlogData.paginator.num_pages
+        serializer = PostSerializer(BlogData, many=True)
         # return Response({'status':201,'payload':serializer.data})
         data = []
         # print({'post':serializer.data})
@@ -23,9 +27,16 @@ class ViewList(APIView):
             post = {'id': info["id"], 'title': info["title"], 'content':info["content"]}
             data.append(post)
             
+        res = {
+            'data': data,
+            'blogData': BlogData, 
+            'lastPage' : totalPage, 
+            'totalPageList' : [n+1 for n in range(totalPage)],
+            'length': len(data)
+        }
         # print(data[1])
         # print(len(data))
-        return render(request, "index.html", {'data': data, 'length': len(data)})
+        return render(request, "index.html", res)
 
 
 class AddPost(APIView):
