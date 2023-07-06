@@ -4,25 +4,28 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render, HttpResponseRedirect
 
-
-# Create your views here.
 
 # Register Api
 class Register(APIView):
+    def get(self, request):
+        return render(request, 'register.html')
+
     def post(self, request):
         serializer = RegisterSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({'payload': serializer.errors, 'status': 400, 'message': 'Something went Wrong'})
         serializer.save()
-        #user=User.objects.get(username=serializer.data['username'])
-        #token_obj,created = Token.objects.get_or_create(user=user)
-
-        return Response({'payload':serializer.data,'status':201,'message':'User is Register Successfully'})
+        return redirect('Login')
 
 
 class Login(APIView):
+    return_url = None
+    def get(self, request):
+        Login.return_url = request.GET.get('return_url')
+        return render(request, 'login.html')
+
     def post(self,request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -37,6 +40,9 @@ class Login(APIView):
         token_obj,created = Token.objects.get_or_create(user=user)
         request.session['username'] = username
         request.session['token'] = str(token_obj)
-        return redirect('home')
-        # return Response({"status": 200,'token':str(token_obj),
-        #                  "massage": "your are successfully logged in"})
+        
+        if Login.return_url:
+            return HttpResponseRedirect(Login.return_url)
+        else:
+            Login.return_url = None
+            return redirect('home')

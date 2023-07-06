@@ -19,10 +19,8 @@ class ViewList(APIView):
         BlogData = paginator.get_page(page_num)
         totalPage = BlogData.paginator.num_pages
         serializer = PostSerializer(BlogData, many=True)
-        # return Response({'status':201,'payload':serializer.data})
+
         data = []
-        # print({'post':serializer.data})
-        
         for info in serializer.data:
             post = {'id': info["id"], 'title': info["title"], 'content':info["content"]}
             data.append(post)
@@ -34,30 +32,23 @@ class ViewList(APIView):
             'totalPageList' : [n+1 for n in range(totalPage)],
             'length': len(data)
         }
-        # print(data[1])
-        # print(len(data))
         return render(request, "index.html", res)
 
 
 class AddPost(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
     def post(self,request):
         serializer=PostSerializer(data=request.data)
         if not serializer.is_valid():
             return Response({'payload':serializer.errors,'status':400,'message':'Something went Wrong'})
         serializer.save()
         return redirect('home')
-        # return Response({'payload':serializer.data,'status':201,'message':'Blog is created'})
 
     def get(self,request):
         return render(request, "create.html")
         
 
 class PostDetails(APIView):
-    # authentication_classes = [TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
-
+   
     def get(self,request,pk):
         try:
             blog= Post.objects.get(id= pk)
@@ -67,8 +58,7 @@ class PostDetails(APIView):
                 'description' : serializer.data["description"],
                 'id' : serializer.data["id"]
             }
-            # print({'post':serializer.data["title"]})
-            # return Response({'payload':serializer.data, 'status':200})
+            
             return render(request, "details.html", data)
         except ObjectDoesNotExist:
             return Response({'status': 404, 'message': 'Not Found'})

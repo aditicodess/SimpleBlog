@@ -19,6 +19,9 @@ ul {
 }
 
 /* nav & footer styles */
+.other {
+  font-size: 3rem;
+}
 nav {
   display: flex;
   justify-content: space-between;
