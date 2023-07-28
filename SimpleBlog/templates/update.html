@@ -1,0 +1,33 @@
+<html lang="en">
+  {% include "head.html" %}
+
+  <body>
+    {% include "nav.html" %}
+
+    <div class="create-blog content">
+      <form action="" method="PATCH">
+        {% csrf_token %}
+        <label for="title">Blog title:</label>
+        <input value="{{title}}" type="text" id="title" name="title" required />
+        <label for="content">Blog content:</label>
+        <input
+          value="{{content}}"
+          type="text"
+          id="content"
+          name="content"
+          required
+        />
+        <label for="body">Blog description:</label>
+        <textarea
+          value="{{description}}"
+          id="description"
+          name="description"
+          required
+        ></textarea>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    {% include "footer.html" %}
+  </body>
+</html>

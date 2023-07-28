@@ -7,7 +7,7 @@
     <div class="blogs content">
       <h2>All Blogs</h2>
       {% if length > 0 %} {% for value in data %}
-      <a class="single" href="/details/{{ value.id }}">
+      <a class="single" href="/post/{{ value.id }}">
         <h3 class="title">{{ value.title }}</h3>
         <p class="snippet">{{ value.content }}</p>
       </a>
