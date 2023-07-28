@@ -1,0 +1,90 @@
+.blog-wrap {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.blog-goBack {
+  text-decoration: none;
+  font-size: 0.8rem;
+  color: #a9a9a9;
+  font-weight: 500;
+  display: block;
+}
+.blog-wrap header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.blog-date {
+  font-size: 0.8rem;
+  color: #a9a9a9;
+  font-weight: 500;
+}
+
+.blog-title {
+  margin-bottom: 0.5rem;
+}
+
+.blog-wrap img {
+  width: 100%;
+}
+
+.blog-subCategory {
+  display: flex;
+  justify-content: center;
+}
+.blog-subCategory > div {
+  margin: 1rem;
+}
+.blog-desc {
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.delete {
+  border-radius: 50%;
+  padding: 8px;
+}
+.delete:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+}
+.edit {
+  margin-right: 10px;
+  border-radius: 50%;
+  padding: 8px;
+}
+.edit img {
+  height: 1.18rem;
+}
+.edit:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.head {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+span {
+  cursor: pointer;
+}
+
+.write {
+  background-color: lightGreen;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 300;
+  border: 1px solid white;
+}
+.write &:hover {
+  color: teal;
+  background-color: white;
+  border: 1px solid teal;
+}
